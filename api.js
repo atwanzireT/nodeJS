@@ -29,9 +29,29 @@ app.get('/api/products/:PdtID', (req,res)=>{
     return res.json(singleProduct);  
 })
 
+// more about params
 app.get('/api/products/:pdtID/reviews/:reviewID', (req,res) =>{
     res.send("Hello World");
     console.log(req.params);
+})
+
+// understandinng queries
+app.get('/api/v1/query/', (req, res) => {
+    const {search, limit} = req.query;
+    let sortedProducts = [...products]
+
+    if(search){
+        sortedProducts = sortedProducts.filter((product) => {
+            return product.name.startsWith(search);
+        })
+    }
+
+    if(limit){
+        sortedProducts = sortedProducts.slice(0, Number(limit));
+        res.status(200).json(sortedProducts);
+    }
+    console.log(req.query);
+    res.send("Fedora World");
 })
 
 app.listen(5000, () => {
