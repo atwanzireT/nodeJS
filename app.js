@@ -1,19 +1,27 @@
 var express = require('express');
 var app = express()
 var mongoose = require("mongoose");
+var path = require("path");
 require('dotenv/config');
 
-// import Routes
-const postsRoute = require('./Routes/posts');
-// app.use('/', postsRoute);
+// setting static
+app.use(express.static("./static"));
+
+
+app.get('/', (req, res) =>{
+})
+
+app.get('/about', (req, res) =>{
+    res.send("About Page");
+})
+
+app.all('*', (req, res) =>{
+    res.status(404).send('<h1>Request Not Found</h1>');
+})
 
 // connect to database
 var mongodb = 'mongodb://localhost:27017/mydb';
-mongoose.connect(mongodb, {useNewUrlParser: true, useUnifiedTopology: true});
 
 
-var db = mongoose.connection();
-
-db.on('error', console.error.bind(console, "MongoDB connection Error: "));
 // port = process.env.PORT;
 app.listen(5000);
