@@ -1,9 +1,13 @@
 const express = require('express');
 const app = express();
 const logger = require('./logger');
+const authorize = require('./authorize');
 
 // req  => middleware => res
-app.use(logger);
+
+//  1: use vs route
+//  2: Options -Our own / express / third Party
+app.use([logger, authorize]);
 
 app.get('/', (req, res) => {
     res.send("<div><h1>Home Page ...</h1><a href = '/about/'>About</a></div>");
