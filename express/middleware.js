@@ -1,20 +1,15 @@
 const express = require('express');
 const app = express();
+const logger = require('./logger');
 
 // req  => middleware => res
-const logger = (req, res, next) => {
-    const url = req.url;
-    const method = req.method;
-    const time = new Date().getFullYear();
-    console.log(url, method, time)
-    res.send("Testing ...");
-    next();
-}
-app.get('/', logger, (req, res) => {
+app.use(logger);
+
+app.get('/', (req, res) => {
     res.send("<div><h1>Home Page ...</h1><a href = '/about/'>About</a></div>");
 })
 
-app.get('/about/', logger , (req, res) => {
+app.get('/about/', (req, res) => {
     res.send("About ... ")
 })
 
